@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Scheduler</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            function loginTest() {
+                
+                // Get elements
+                var uname = document.getElementByID("username").value;
+                var pword = document.getElementByID("password").value;
+                
+                // Check for empty elements
+                if (uname || pword == "") {
+                    document.getElementByID("display").innerHTML = "Please enter vaild information";
+                    return;
+                }
+                
+                // Check XML file
+                if (window.XMLHttpRequest){
+                    // for IE7+/Firefox/Chrome/Opera/Safari
+                    xmlhttp = new XMLHttpRequest();
+                } else {
+                    // for IE5/IE6
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTP");
+                }
+                xmlhttp.onreadystatechange=function() {
+                    if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                     var responsedocument.getElementById("display").innerHTML=xmlhttp.responseText;
+                        }
+                      }
+                    xmlhttp.open("GET","/MyScheduler/userAccounts/users"?username=uname,true);
+                    xmlhttp.send();
+                }
+                 var 
+                if (xmlhttp.responseText !password) {
+                    document.getElementById("display").innerHTML = "Password Incorrect. Please try again."
+                    return;
+                } else {
+                    document.getElementById("display").innerHTML ="Success!";
+                    window.location.href="/MyScheduler/mainpage.php";
+                }
+
+            }
+        </script>
+              
+    </head>
+    <body>
+        <h1 class="logo">My Scheduler</h1>
+            
+        <div id="loginform">
+            <p>Please Login</p>
+            <p>All fields are required.</p>
+            User Name: <input type="text" name="username" id="username" size="8" required><br>
+            Password:<input type="text" name="password" id="password" size="8" required><br>
+            <button type="button" onclick="loginTest()" class="formButton">LOGIN</button>
+            <button type="button" onClick="window.location.href='/MyScheduler/userAccounts/register.php'" class="formButton">REGISTER</button>
+            <div id="display"></div>
+        </div>
+        
+        
+        
+    </body>
