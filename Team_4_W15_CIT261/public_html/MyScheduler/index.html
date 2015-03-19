@@ -8,15 +8,9 @@
             function loginTest() {
                 
                 // Get elements
-                var uname = document.getElementByID("username").value;
-                var pword = document.getElementByID("password").value;
-                
-                // Check for empty elements
-                if (uname || pword == "") {
-                    document.getElementByID("display").innerHTML = "Please enter vaild information";
-                    return;
-                }
-                
+                var uname = document.getElementById("username").value;
+                var pword = document.getElementById("password").value;
+                               
                 // Check XML file
                 if (window.XMLHttpRequest){
                     // for IE7+/Firefox/Chrome/Opera/Safari
@@ -27,14 +21,14 @@
                 }
                 xmlhttp.onreadystatechange=function() {
                     if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-                     var responsedocument.getElementById("display").innerHTML=xmlhttp.responseText;
+                        document.getElementById("display").innerHTML=xmlhttp.responseText;
                         }
                       }
-                    xmlhttp.open("GET","/MyScheduler/userAccounts/users"?username=uname,true);
+                    xmlhttp.open("GET","/MyScheduler/userAccounts/users?username=uname",true);
                     xmlhttp.send();
-                }
-                 var 
-                if (xmlhttp.responseText !password) {
+                
+                
+                if (xmlhttp.responseText != password) {
                     document.getElementById("display").innerHTML = "Password Incorrect. Please try again."
                     return;
                 } else {
@@ -52,8 +46,8 @@
         <div id="loginform">
             <p>Please Login</p>
             <p>All fields are required.</p>
-            User Name: <input type="text" name="username" id="username" size="8" required><br>
-            Password:<input type="text" name="password" id="password" size="8" required><br>
+            User Name: <input type="text" name="username" id="username" size="8"><br>
+            Password:<input type="text" name="password" id="password" size="8"><br>
             <button type="button" onclick="loginTest()" class="formButton">LOGIN</button>
             <button type="button" onClick="window.location.href='/MyScheduler/userAccounts/register.php'" class="formButton">REGISTER</button>
             <div id="display"></div>
