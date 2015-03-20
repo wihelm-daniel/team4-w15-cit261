@@ -5,45 +5,60 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script>
+            function register() {
+                // Get elements
+                var uname = document.getElementById("username").value;
+                var pword = document.getElementById("password").value;
+                
+                // Check 
+                if (typeof(Storage) !== "undefined") {
+                // store user defined text
+                    localStorage.username = uname;
+                    localStorage.password = pword;
+                    document.getElementById("loginMessage").innerHTML = "Your new account has been activated.";
+                } else {
+                    var cookieEnabled=(navigator.cookieEnabled)? true : false;
+                        if (typeof navigator.cookieEnabled===cookieEnabled){ 
+                            document.cookie = "username=uname; password=pword; expires=Thu, 31 Dec 2015 12:00:00 UTC";
+                            document.getElementById("loginMessage").innerHTML = "Your new account has been activated.";
+                        } else {
+                            document.getElementById("loginMessage").innerHTML = "Your new account cannot be created until you turn cookies on.";
+                            return;
+                        }
+                       
+}
+                }
+            
             function loginTest() {
-                var xmlhttp;
-                var txt,x,i;
                 // Get elements
                 var uname = document.getElementById("username").value;
                 var pword = document.getElementById("password").value;
                                
-                // Check XML file
-                if (window.XMLHttpRequest){
-                    // for IE7+/Firefox/Chrome/Opera/Safari
-                    xmlhttp = new XMLHttpRequest();
-                } else {
-                    // for IE5/IE6
-                    xmlhttp = new ActiveXObject("Microsoft.XMLHTP");
-                }
-                xmlhttp.onreadystatechange=function() {
-                    if (xmlhttp.readyState===4 && xmlhttp.status===200) {
-                      xmlDoc=xmlhttp.responseXML;
-                      txt="";
-                      x=xmlDoc.getElementsByTagName("USERNAME");
-                      for (i=0;i<x.length;i++) {
-                        txt = x[i].childNodes[0].nodeValue;
-                        document.getElementById("display").innerHTML = txt;
-                        if ( txt === uname){
-                            if (x[i].chileNodes(1).nodeValue === pword) {
-                                 window.location.href="/MyScheduler/mainpage.php";
-                                } else {
-                                   document.getElementById("display").innerHTML = "Password incorrect. Try again." 
-                                   return;
-                                }
-                            } else {
-                               continue;
-                            }
+                // Check 
+                if (typeof(Storage) != "undefined") {
+                // store user defined text
+                    var password = localStorage.getItem("password");
+                    var username = localStorage.getItem("username");
+                    
+                    if (username === uname && password === pword){
+                        window.open("http://localhost:8383/Team_4_W15_CIT261/MyScheduler/mainpage.php");
+                    } else {
+                        document.getElementById("loginMessage").innerHTML = "Your password or username are not correct. Try again.";
+                             return;
                         }
-                      document.getElementById("myDiv").innerHTML=txt;
-                      }
-                    };
-            xmlhttp.open("GET","/MyScheduler/userAccounts/users.xml",true);
-            xmlhttp.send();
+                } else {
+                    var username = document.cookie.username;
+                    var password = document.cookie.password;
+                    
+                    if (username === uname && password === pword){
+                         window.open("http://localhost:8383/Team_4_W15_CIT261/MyScheduler/mainpage.php");
+                    } else {
+                        document.getElementById("loginMessage").innerHTML = "Your password or username are not correct. Try again.";
+                             return;
+                            }
+                    
+                    }
+               document.getElementById("firstDisplay").innerHTML = output; 
                     
             }
         </script>
@@ -58,10 +73,11 @@
             User Name: <input type="text" name="username" id="username" size="8"><br>
             Password:<input type="password" name="password" id="password" size="8"><br>
             <button type="button" onclick="loginTest()" class="formButton">LOGIN</button>
-            <button type="button" onClick="window.location.href='/MyScheduler/userAccounts/register.php'" class="formButton">REGISTER</button>
-            <div id="display"></div>
+            <button type="button" onClick="register()" class="formButton">REGISTER</button>
+            <div id="loginMessage"></div>
         </div>
         
         
         
     </body>
+</html>
