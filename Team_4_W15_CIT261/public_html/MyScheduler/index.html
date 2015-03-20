@@ -6,7 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script>
             function loginTest() {
-                
+                var xmlhttp;
+                var txt,x,i;
                 // Get elements
                 var uname = document.getElementById("username").value;
                 var pword = document.getElementById("password").value;
@@ -20,22 +21,30 @@
                     xmlhttp = new ActiveXObject("Microsoft.XMLHTP");
                 }
                 xmlhttp.onreadystatechange=function() {
-                    if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-                        document.getElementById("display").innerHTML=xmlhttp.responseText;
+                    if (xmlhttp.readyState===4 && xmlhttp.status===200) {
+                      xmlDoc=xmlhttp.responseXML;
+                      txt="";
+                      x=xmlDoc.getElementsByTagName("USERNAME");
+                      for (i=0;i<x.length;i++) {
+                        txt = x[i].childNodes[0].nodeValue;
+                        document.getElementById("display").innerHTML = txt;
+                        if ( txt === uname){
+                            if (x[i].chileNodes(1).nodeValue === pword) {
+                                 window.location.href="/MyScheduler/mainpage.php";
+                                } else {
+                                   document.getElementById("display").innerHTML = "Password incorrect. Try again." 
+                                   return;
+                                }
+                            } else {
+                               continue;
+                            }
                         }
+                      document.getElementById("myDiv").innerHTML=txt;
                       }
-                    xmlhttp.open("GET","/MyScheduler/userAccounts/users?username=uname",true);
-                    xmlhttp.send();
-                
-                
-                if (xmlhttp.responseText != password) {
-                    document.getElementById("display").innerHTML = "Password Incorrect. Please try again."
-                    return;
-                } else {
-                    document.getElementById("display").innerHTML ="Success!";
-                    window.location.href="/MyScheduler/mainpage.php";
-                }
-
+                    };
+            xmlhttp.open("GET","/MyScheduler/userAccounts/users.xml",true);
+            xmlhttp.send();
+                    
             }
         </script>
               
@@ -47,7 +56,7 @@
             <p>Please Login</p>
             <p>All fields are required.</p>
             User Name: <input type="text" name="username" id="username" size="8"><br>
-            Password:<input type="text" name="password" id="password" size="8"><br>
+            Password:<input type="password" name="password" id="password" size="8"><br>
             <button type="button" onclick="loginTest()" class="formButton">LOGIN</button>
             <button type="button" onClick="window.location.href='/MyScheduler/userAccounts/register.php'" class="formButton">REGISTER</button>
             <div id="display"></div>
