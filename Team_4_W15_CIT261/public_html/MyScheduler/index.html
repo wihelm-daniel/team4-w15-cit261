@@ -49,7 +49,90 @@
                 } else {
                     var username = document.cookie.username;
                     var password = document.cookie.password;
+                    <!DOCTYPE html>
+<html>
+    <head>
+        <title>My Scheduler</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            function register() {
+                // Get elements
+                var uname = document.getElementById("username").value;
+                var pword = document.getElementById("password").value;
+                
+                // Check 
+                if (typeof(Storage) !== "undefined") {
+                // store user defined text
+                    localStorage.setItem("user", JSON.stringify({
+                        username: uname,
+                        password: pword
+                        
+                    }));
+                    document.getElementById("loginMessage").innerHTML = "Your new account has been activated.";
+                } else {
+                    var cookieEnabled=(navigator.cookieEnabled)? true : false;
+                        if (typeof navigator.cookieEnabled===cookieEnabled){ 
+                            document.cookie = "username=user.uname; password=user.pword; expires=Thu, 31 Dec 2015 12:00:00 UTC";
+                            document.getElementById("loginMessage").innerHTML = "Your new account has been activated.";
+                        } else {
+                            document.getElementById("loginMessage").innerHTML = "Your new account cannot be created until you turn cookies on.";
+                            return;
+                        }
+                       
+}
+                }
+            
+            function loginTest() {
+                // Get elements
+                var uname = document.getElementById("username").value;
+                var pword = document.getElementById("password").value;
+                               
+                // Check 
+                     if (typeof(Storage) != "undefined") {
+                // store user defined text
+                    var user = JSON.parse(localStorage.getItem("user"));                                  
+                    if (user.username === uname && user.password === pword){
+                        window.open("http://driftwoodsoft.com/MyScheduler/mainpage.html");
+                    } else {
+                        document.getElementById("loginMessage").innerHTML = "Your password or username are not correct. Try again.";
+                             return;
+                        }
+                } else {
+                    var username = document.cookie.user.uname;
+                    var password = document.cookie.user.pword;
                     
+                    if (username === uname && password === pword){
+                         window.open("http://driftwoodsoft.com/MyScheduler/mainpage.html");
+                    } else {
+                        document.getElementById("loginMessage").innerHTML = "Your password or username are not correct. Try again.";
+                             return;
+                            }
+                    
+                    }
+               document.getElementById("loginMessage").innerHTML = "There was a problem. Try again."; 
+                    
+            }
+        </script>
+              
+    </head>
+    <body>
+        <h1 class="logo">My Scheduler</h1>
+            
+        <div id="loginform">
+            <p>Please Login</p>
+            <p>All fields are required.</p>
+            User Name: <input type="text" name="username" id="username" size="8"><br>
+            Password:<input type="password" name="password" id="password" size="8"><br>
+            <button type="button" onclick="loginTest()" class="formButton">LOGIN</button>
+            <button type="button" onClick="register()" class="formButton">REGISTER</button>
+            <div id="loginMessage"></div>
+        </div>
+        
+        
+        
+    </body>
+</html>
                     if (username === uname && password === pword){
                          window.open("http://localhost:8383/Team_4_W15_CIT261/MyScheduler/mainpage.php");
                     } else {
