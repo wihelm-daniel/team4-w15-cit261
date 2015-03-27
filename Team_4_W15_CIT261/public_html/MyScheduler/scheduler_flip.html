@@ -1,0 +1,380 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+</head>
+<style>
+.flip-container {
+    -webkit-perspective: 1000;
+    -moz-perspective: 1000;
+    -o-perspective:1000;
+    -ms-perspective: 1000;
+    perspective: 1000;
+
+    -ms-transform: perspective(1000px);
+    -moz-transform: perspective(1000px);
+    -moz-transform-style: preserve-3d; 
+    -ms-transform-style: preserve-3d; 
+}
+
+.flipper {
+    -webkit-transition: 0.6s;
+    -webkit-transform-style: preserve-3d;
+    -ms-transition: 0.6s;
+
+    -moz-transition: 0.6s;
+    -moz-transform: perspective(1000px);
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+
+    transition: 0.6s;
+    transform-style: preserve-3d;
+
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+}
+
+.flipper.flipped {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+
+.front, .back {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+
+    -webkit-transition: 0.6s;
+    -webkit-transform-style: preserve-3d;
+
+    -moz-transition: 0.6s;
+    -moz-transform-style: preserve-3d;
+
+    -o-transition: 0.6s;
+    -o-transform-style: preserve-3d;
+
+    -ms-transition: 0.6s;
+    -ms-transform-style: preserve-3d;
+
+    transition: 0.6s;
+    transform-style: preserve-3d;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+}
+
+/* front pane, placed above back */
+.front {
+    z-index: 2;
+}
+
+/* back, initially hidden pane */
+.back {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);    
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+.hidden_menu{display:none}
+
+.header {width:auto; height: 50px; background-color:#5C94C8; padding-top:15px; padding-left:20px ;font-size: 2em; color: white; margin-bottom: 3px;}
+
+.day-style a{font-size:2em;text-decoration:none; color:#29ACD4}
+
+.day-style a,a:visited,a:hover,a:active{
+	position:relative;
+  transition:0.5s color ease;
+	text-decoration:none;
+	color:#29ACD4;
+}
+
+.day-style a:hover{
+	color:#A61E20;
+}
+
+.mon-sun-style{list-style-type:none; margin: 4px 0; padding: 4px 6px; border: 2px solid;background-color:#E4E4E4; border-color:#D3D3D3; border-radius: 5px;
+}
+
+li {list-style-type:none; margin: 4px 0; padding: 4px 6px;}
+
+.appointment-display {border-bottom: thin solid #D3D3D3;}
+
+.footer { border-top: thin solid #5C94C8; margin-top: 15px;
+	}
+
+.hidden_menu{display:none}
+
+.header {width:auto; height: 50px; background-color:#5C94C8; padding-top:15px; padding-left:20px ;font-size: 2em; color: white; margin-bottom: 3px;}
+
+.day-style a{font-size:2em;text-decoration:none; color:#29ACD4; padding-left: 12px}
+
+.day-style a,a:visited,a:hover,a:active{
+	position:relative;
+  transition:0.2s color ease;
+	text-decoration:none;
+	color:#29ACD4;
+}
+
+.day-style a:hover{
+	color:#C84040;
+}
+#loginform { width:100%; margin-top: -65px}
+
+		h2.login-header {color:#5C94C8; font-size:2em;}
+		
+		button {font-size:1.5em; color:#29ACD4; width: 100%; height: 50px;}
+		
+		table {padding-top: 15px;}
+		
+		td {font-size: 1.4em; color:#29ACD4}
+		
+		input {height: 25px;}
+		
+		.footer { border-top: thin solid #5C94C8; margin-top: 15px;}
+		
+		#loginMessage {margin-top: 15px; color:#A61E20; size: 1.3em}
+</style>
+<script>
+            function register() {
+                // Get elements
+                var uname = document.getElementById("username").value;
+                var pword = document.getElementById("password").value;
+                
+                // Check 
+                if (typeof(Storage) !== "undefined") {
+                // store user defined text
+                    localStorage.username = uname;
+                    localStorage.password = pword;
+                    document.getElementById("loginMessage").innerHTML = "Your new account has been activated.";
+                } else {
+                    var cookieEnabled=(navigator.cookieEnabled)? true : false;
+                        if (typeof navigator.cookieEnabled===cookieEnabled){ 
+                            document.cookie = "username=uname; password=pword; expires=Thu, 31 Dec 2015 12:00:00 UTC";
+                            document.getElementById("loginMessage").innerHTML = "Your new account has been activated.";
+                        } else {
+                            document.getElementById("loginMessage").innerHTML = "Your new account cannot be created until you turn cookies on.";
+                            return;
+                        }
+                       
+}
+                }
+            
+            function loginTest() {
+                // Get elements
+                var uname = document.getElementById("username").value;
+                var pword = document.getElementById("password").value;
+                               
+                // Check 
+                if (typeof(Storage) != "undefined") {
+                // store user defined text
+                    var password = localStorage.getItem("password");
+                    var username = localStorage.getItem("username");
+                    
+                    if (username === uname && password === pword){
+                        window.open("http://localhost:8383/Team_4_W15_CIT261/MyScheduler/mainpage.php");
+                    } else {
+                        document.getElementById("loginMessage").innerHTML = "Your password or username are not correct. Try again.";
+                             return;
+                        }
+                } else {
+                    var username = document.cookie.username;
+                    var password = document.cookie.password;
+                    
+                    if (username === uname && password === pword){
+                         window.open("http://localhost:8383/Team_4_W15_CIT261/MyScheduler/mainpage.php");
+                    } else {
+                        document.getElementById("loginMessage").innerHTML = "Your password or username are not correct. Try again.";
+                             return;
+                            }
+                    
+                    }
+               document.getElementById("firstDisplay").innerHTML = output; 
+                    
+            }
+</script>
+<script>
+function show_monday(){
+    var menu = document.getElementById('monday-dropdown');
+
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+
+function show_tuesday(){
+    var menu = document.getElementById('tuesday-dropdown');
+
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+function show_wednesday(){
+    var menu = document.getElementById('wednesday-dropdown');
+
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+
+function show_thursday(){
+    var menu = document.getElementById('thursday-dropdown');
+
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+
+function show_friday(){
+    var menu = document.getElementById('friday-dropdown');
+
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+
+function show_saturday(){
+    var menu = document.getElementById('saturday-dropdown');
+
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+
+function show_sunday(){
+    var menu = document.getElementById('sunday-dropdown');
+
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+</script>
+<body>
+<div class="flip-container">
+  <div class="flipper" id="flipper"> 
+    <div class="front" id="front"><div class="header">My Scheduler
+</div>
+    <center>
+    
+        <div id="loginform">
+            <table>
+            <tr><th><h2 class="login-header">Please Login</h2></th></tr>
+            <tr><td>User Name:</td> <td><input type="text" name="username" id="username" size="12"></td></tr><br>
+            <tr><td>Password:</td> <td><input type="password" name="password" id="password" size="12"></td></tr><br>
+            </table>
+            <br>
+            <button type="button" onclick="document.querySelector('#flipper').classList.toggle('flipped');" class="formButton">LOGIN</button><br><br>
+            <button type="button" onclick="document.querySelector('#flipper').classList.toggle('flipped');" class="formButton">REGISTER</button>
+            <div id="loginMessage"></div>
+        </div>
+        <div class="footer"></div>
+    </center>  </div>
+    <div class="back" id="back"><div class="header">My Scheduler
+</div>
+
+<div class="day-style">
+	<div class="mon-sun-style" onClick="show_monday()"><a href="#">Monday</a></div>
+    <div id="monday-dropdown" class="hidden_menu">
+        <ul class="appointment-display">
+            <li>Name</li>
+            <li>Time</li>
+            <li>Location</li>
+        </ul>  
+</div> 
+</div>   
+<div class="day-style">     
+<div class="mon-sun-style" onClick="show_tuesday()"><a href="#">Tuesday</a></div>
+     <div id="tuesday-dropdown" class="hidden_menu">
+      <ul class="appointment-display">
+            <li>Name</li>
+            <li>Time</li>
+            <li>Location</li>
+        </ul>
+      <ul class="appointment-display">
+            <li>Name</li>
+            <li>Time</li>
+            <li>Location</li>
+        </ul>     
+</div>
+</div>
+<div class="day-style">     
+<div class="mon-sun-style" onClick="show_wednesday()"><a href="#">Wednesday</a></div>
+    <div id="wednesday-dropdown" class="hidden_menu">
+        <ul class="appointment-display">
+            <li>Name</li>
+            <li>Time</li>
+            <li>Location</li>
+        </ul>           
+</div>
+</div>
+<div class="day-style">     
+<div class="mon-sun-style" onClick="show_thursday()"><a href="#">Thursday</a></div>
+    <div id="thursday-dropdown" class="hidden_menu">
+        <ul class="appointment-display">
+            <li>Name</li>
+            <li>Time</li>
+            <li>Location</li>
+        </ul class="appointment-display">           
+</div>
+</div>
+<div class="day-style">     
+<div class="mon-sun-style" onClick="show_friday()"><a href="#">Friday</a></div>
+    <div id="friday-dropdown" class="hidden_menu">
+        <ul class="appointment-display">
+            <li>Name</li>
+            <li>Time</li>
+            <li>Location</li>
+        </ul>           
+</div>
+</div>
+<div class="day-style">     
+<div class="mon-sun-style" onClick="show_saturday()"><a href="#">Saturday</a></div>
+    <div id="saturday-dropdown" class="hidden_menu">
+        <ul class="appointment-display">
+            <li>Name</li>
+            <li>Time</li>
+            <li>Location</li>
+        </ul>           
+</div>
+</div>
+<div class="day-style">     
+<div class="mon-sun-style" onClick="show_sunday()"><a href="#">Sunday</a></div>
+    <div id="sunday-dropdown" class="hidden_menu">
+        <ul class="appointment-display">
+            <li>Name</li>
+            <li>Time</li>
+            <li>Location</li>
+        </ul>           
+</div>
+</div>
+<div class="footer">
+</div></div>
+  </div>
+</div>
+</body>
+</html>

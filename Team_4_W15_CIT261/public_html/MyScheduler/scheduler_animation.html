@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Scheduler</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            function register() {
+                // Get elements
+                var uname = document.getElementById("username").value;
+                var pword = document.getElementById("password").value;
+                
+                // Check 
+                if (typeof(Storage) !== "undefined") {
+                // store user defined text
+                    localStorage.username = uname;
+                    localStorage.password = pword;
+                    document.getElementById("loginMessage").innerHTML = "Your new account has been activated.";
+                } else {
+                    var cookieEnabled=(navigator.cookieEnabled)? true : false;
+                        if (typeof navigator.cookieEnabled===cookieEnabled){ 
+                            document.cookie = "username=uname; password=pword; expires=Thu, 31 Dec 2015 12:00:00 UTC";
+                            document.getElementById("loginMessage").innerHTML = "Your new account has been activated.";
+                        } else {
+                            document.getElementById("loginMessage").innerHTML = "Your new account cannot be created until you turn cookies on.";
+                            return;
+                        }
+                       
+}
+                }
+            
+            function loginTest() {
+                // Get elements
+                var uname = document.getElementById("username").value;
+                var pword = document.getElementById("password").value;
+                               
+                // Check 
+                if (typeof(Storage) != "undefined") {
+                // store user defined text
+                    var password = localStorage.getItem("password");
+                    var username = localStorage.getItem("username");
+                    
+                    if (username === uname && password === pword){
+                        window.open("http://localhost:8383/Team_4_W15_CIT261/MyScheduler/mainpage.php");
+                    } else {
+                        document.getElementById("loginMessage").innerHTML = "Your password or username are not correct. Try again.";
+                             return;
+                        }
+                } else {
+                    var username = document.cookie.username;
+                    var password = document.cookie.password;
+                    
+                    if (username === uname && password === pword){
+                         window.open("http://localhost:8383/Team_4_W15_CIT261/MyScheduler/mainpage.php");
+                    } else {
+                        document.getElementById("loginMessage").innerHTML = "Your password or username are not correct. Try again.";
+                             return;
+                            }
+                    
+                    }
+               document.getElementById("firstDisplay").innerHTML = output; 
+                    
+            }
+        </script>
+        <style>
+		.header {width:auto; height: 50px; background-color:#5C94C8; padding-top:15px; padding-left:20px ;font-size: 2em; color: white; margin-bottom: 25px;}
+		
+		#loginform { width:100%; margin-top: -65px}
+
+		h2.login-header {color:#5C94C8; font-size:2em;}
+		
+		button {font-size:1.5em; color:#29ACD4; width: 100%; height: 50px;}
+		
+		table {padding-top: 15px;}
+		
+		td {font-size: 1.4em; color:#29ACD4}
+		
+		input {height: 25px;}
+		
+		.footer { border-top: thin solid #5C94C8; margin-top: 15px;}
+		
+		#loginMessage {margin-top: 15px; color:#A61E20; size: 1.3em}
+		
+		.header-animation {color: white;padding: 10px;display:inline;border-radius: 5px;background: #29ACD4;position: relative;
+    		-webkit-animation: headeranimation 5s linear 2s infinite alternate;
+    		animation: headeranimation 5s linear 2s infinite alternate;
+}
+@-webkit-keyframes headeranimation {
+    0%   {background:#29ACD4; left:0px; top:0px;}
+    50%  {background:#A61E20; left:200px; top:0px;}
+}
+@keyframes headeranimation {
+    0%   {background:#29ACD4; left:0px; top:0px;}
+    50%  {background:#A61E20; left:200px; top:0px;}
+}
+
+		</style>
+              
+    </head>
+    <body>
+    <div>
+    <div class="header">My Scheduler
+</div>
+    <center>
+    
+        <div id="loginform">
+            <table>
+            <tr><th><h2 class="login-header">Please Login</h2></th></tr>
+            <tr><td>User Name:</td> <td><input type="text" name="username" id="username" size="12"></td></tr><br>
+            <tr><td>Password:</td> <td><input type="password" name="password" id="password" size="12"></td></tr><br>
+            </table>
+            <br>
+            <button type="button" onclick="loginTest()" class="formButton">LOGIN</button><br><br>
+            <button type="button" onClick="register()" class="formButton">REGISTER</button>
+            <div id="loginMessage"></div>
+        </div>
+        <div class="footer"></div>
+    </center>  
+        </div>
+    </body>
+</html>
