@@ -155,13 +155,16 @@ li {list-style-type:none; margin: 4px 0; padding: 4px 6px;}
                 // Check 
                 if (typeof(Storage) !== "undefined") {
                 // store user defined text
-                    localStorage.username = uname;
-                    localStorage.password = pword;
+                    localStorage.setItem("user", JSON.stringify({
+                        username: uname,
+                        password: pword
+                        
+                    }));
                     document.getElementById("loginMessage").innerHTML = "Your new account has been activated.";
                 } else {
                     var cookieEnabled=(navigator.cookieEnabled)? true : false;
                         if (typeof navigator.cookieEnabled===cookieEnabled){ 
-                            document.cookie = "username=uname; password=pword; expires=Thu, 31 Dec 2015 12:00:00 UTC";
+                            document.cookie = "username=user.username; password=user.password; expires=Thu, 31 Dec 2015 12:00:00 UTC";
                             document.getElementById("loginMessage").innerHTML = "Your new account has been activated.";
                         } else {
                             document.getElementById("loginMessage").innerHTML = "Your new account cannot be created until you turn cookies on.";
@@ -177,30 +180,29 @@ li {list-style-type:none; margin: 4px 0; padding: 4px 6px;}
                 var pword = document.getElementById("password").value;
                                
                 // Check 
-                if (typeof(Storage) != "undefined") {
+                     if (typeof(Storage) != "undefined") {
                 // store user defined text
-                    var password = localStorage.getItem("password");
-                    var username = localStorage.getItem("username");
-                    
-                    if (username === uname && password === pword){
-                        window.open("http://localhost:8383/Team_4_W15_CIT261/MyScheduler/mainpage.php");
+                    var user = JSON.parse(localStorage.getItem("user"));                                  
+                    if (user.username === uname && user.password === pword){
+                        document.querySelector('#flipper').classList.toggle('flipped');
+                        return;
                     } else {
                         document.getElementById("loginMessage").innerHTML = "Your password or username are not correct. Try again.";
                              return;
                         }
                 } else {
-                    var username = document.cookie.username;
-                    var password = document.cookie.password;
+                    var username = document.cookie.user.username;
+                    var password = document.cookie.user.password;
                     
                     if (username === uname && password === pword){
-                         window.open("http://localhost:8383/Team_4_W15_CIT261/MyScheduler/mainpage.php");
+                         window.open("http://driftwoodsoft.com/MyScheduler/mainpage.html");
                     } else {
                         document.getElementById("loginMessage").innerHTML = "Your password or username are not correct. Try again.";
                              return;
                             }
                     
                     }
-               document.getElementById("firstDisplay").innerHTML = output; 
+               document.getElementById("loginMessage").innerHTML = "There was a problem. Try again."; 
                     
             }
 </script>
@@ -288,9 +290,10 @@ function show_sunday(){
             <tr><td>Password:</td> <td><input type="password" name="password" id="password" size="12"></td></tr><br>
             </table>
             <br>
-            <button type="button" onclick="document.querySelector('#flipper').classList.toggle('flipped');" class="formButton">LOGIN</button><br><br>
-            <button type="button" onclick="document.querySelector('#flipper').classList.toggle('flipped');" class="formButton">REGISTER</button>
+            <button type="button" onclick="loginTest()" class="formButton">LOGIN</button><br><br>
+            <button type="button" onclick="register()" class="formButton">REGISTER</button>
             <div id="loginMessage"></div>
+            
         </div>
         <div class="footer"></div>
     </center>  </div>
