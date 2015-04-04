@@ -197,7 +197,8 @@ li {list-style-type:none; margin: 4px 0; padding: 4px 6px;}
                     var password = document.cookie.user.password;
                     
                     if (username === uname && password === pword){
-                         window.open("http://driftwoodsoft.com/MyScheduler/mainpage.html");
+                         document.querySelector('#flipper').classList.toggle('flipped');
+                        return;
                     } else {
                         document.getElementById("loginMessage").innerHTML = "Your password or username are not correct. Try again.";
                              return;
