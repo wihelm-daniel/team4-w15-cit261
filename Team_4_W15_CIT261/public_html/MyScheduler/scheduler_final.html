@@ -1,0 +1,736 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>My Scheduler</title>
+<script src="main.js"></script>
+<link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<style>
+.flip-container {
+    -webkit-perspective: 1000;
+    -moz-perspective: 1000;
+    -o-perspective:1000;
+    -ms-perspective: 1000;
+    perspective: 1000;
+    -ms-transform: perspective(1000px);
+    -moz-transform: perspective(1000px);
+    -moz-transform-style: preserve-3d; 
+    -ms-transform-style: preserve-3d; 
+}
+.flipper {
+    -webkit-transition: 0.6s;
+    -webkit-transform-style: preserve-3d;
+    -ms-transition: 0.6s;
+    -moz-transition: 0.6s;
+    -moz-transform: perspective(1000px);
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transition: 0.6s;
+    transform-style: preserve-3d;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+}
+.flipper.flipped {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+.front, .back {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: 0.6s;
+    -webkit-transform-style: preserve-3d;
+    -moz-transition: 0.6s;
+    -moz-transform-style: preserve-3d;
+    -o-transition: 0.6s;
+    -o-transform-style: preserve-3d;
+    -ms-transition: 0.6s;
+    -ms-transform-style: preserve-3d;
+    transition: 0.6s;
+    transform-style: preserve-3d;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+/* front pane, placed above back */
+.front {
+    z-index: 2;
+}
+/* back, initially hidden pane */
+.back {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);    
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+.hidden_menu{display:none}
+.header {width:auto; height: 50px; background-color:#5C94C8; padding-top:15px; padding-left:20px ;font-size: 2em; color: white; margin-bottom: 3px;}
+.day-style a{font-size:2em;text-decoration:none; color:#29ACD4}
+.day-style a,a:visited,a:hover,a:active{
+	position:relative;
+  	transition:0.5s color ease;
+	text-decoration:none;
+	color:#29ACD4;
+}
+.day-style a:hover{
+	color:#A61E20;
+}
+.mon-sun-style{list-style-type:none; margin: 4px 0; padding: 4px 6px; border: 2px solid;background-color:#E4E4E4; border-color:#D3D3D3; border-radius: 5px;
+}
+li {list-style-type:none; margin: 4px 0; padding: 4px 0px; font-family:"Helvetica Neue", Helvetica, Arial, sans-serif}
+.appointment-display {border-bottom: thin solid #D3D3D3; padding-bottom: 15px}
+
+.footer { border-top: thin solid #5C94C8; margin-top: 15px;
+	}
+.hidden_menu{display:none}
+.header {width:auto; height: 50px; background-color:#5C94C8; padding-top:15px; padding-left:20px ;font-size: 2em; color: white; margin-bottom: 3px;}
+.day-style a{font-size:2em;text-decoration:none; color:#29ACD4; padding-left: 12px}
+.day-style a,a:visited,a:hover,a:active{
+	position:relative;
+  transition:0.2s color ease;
+	text-decoration:none;
+	color:#29ACD4;
+}
+.day-style a:hover{
+	color:#C84040;
+}
+
+.save-edits-button  {font-size:1.5em; color:#29ACD4; width: 80px; height: 50px;}
+
+.edits-alert {padding-top: 10px; font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; color:#C84040}
+
+.help-alert {padding: 10px; font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;}
+
+#loginform { width:100%; margin-top: -65px}
+		h2.login-header {color:#5C94C8; font-size:2em;}
+		
+		button {font-size:1.5em; color:#29ACD4; width: 100%; height: 50px;}
+		
+		table {padding-top: 15px;}
+		
+		td {font-size: 1.4em; color:#29ACD4}
+		
+		input {height: 25px;}
+		
+		.footer { border-top: thin solid #5C94C8; margin-top: 15px;}
+		
+		#loginMessage {margin-top: 15px; color:#A61E20; size: 1.3em}
+		
+		.header-animation {color: white;padding: 10px;display:inline;border-radius: 5px;background: #29ACD4;position: relative;
+    		-webkit-animation: headeranimation 5s linear 2s infinite alternate;
+    		animation: headeranimation 5s linear 2s infinite alternate;
+}
+@-webkit-keyframes headeranimation {
+    0%   {background:#29ACD4; left:0px; top:0px;}
+    40%  {background:#A61E20; left:180px; top:0px;}
+}
+@keyframes headeranimation {
+    0%   {background:#29ACD4; left:0px; top:0px;}
+    40%  {background:#A61E20; left:180px; top:0px;}
+}
+
+</style>
+<script>
+function loadXMLDoc()
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","ajax_info.xhtml",true);
+xmlhttp.send();
+}
+
+
+function saveEdits() {
+
+//get the editable element
+var editElem = document.getElementById("edit");
+var editElem1 = document.getElementById("edit1");
+var editElem2 = document.getElementById("edit2");
+//get the edited element content
+var userVersion = editElem.innerHTML;
+var userVersion1 = editElem1.innerHTML;
+var userVersion2 = editElem2.innerHTML;
+
+//save the content to local storage
+localStorage.userEdits = userVersion;
+localStorage.userEdits1 = userVersion1;
+localStorage.userEdits2 = userVersion2;
+
+//write a confirmation to the user
+document.getElementById("update").innerHTML="Edits saved!";
+
+}
+
+function saveEdits1() {
+
+//get the editable element
+var editElem3 = document.getElementById("edit3");
+var editElem4 = document.getElementById("edit4");
+var editElem5 = document.getElementById("edit5");
+//get the edited element content
+var userVersion3 = editElem3.innerHTML;
+var userVersion4 = editElem4.innerHTML;
+var userVersion5 = editElem5.innerHTML;
+
+//save the content to local storage
+localStorage.userEdits3 = userVersion3;
+localStorage.userEdits4 = userVersion4;
+localStorage.userEdits5 = userVersion5;
+
+//write a confirmation to the user
+document.getElementById("update1").innerHTML="Edits saved!";
+
+}
+
+function saveEdits2() {
+
+//get the editable element
+var editElem6 = document.getElementById("edit6");
+var editElem7 = document.getElementById("edit7");
+var editElem8 = document.getElementById("edit8");
+//get the edited element content
+var userVersion6 = editElem6.innerHTML;
+var userVersion7 = editElem7.innerHTML;
+var userVersion8 = editElem8.innerHTML;
+
+//save the content to local storage
+localStorage.userEdits6 = userVersion6;
+localStorage.userEdits7 = userVersion7;
+localStorage.userEdits8 = userVersion8;
+
+//write a confirmation to the user
+document.getElementById("update2").innerHTML="Edits saved!";
+
+}
+
+function saveEdits3() {
+
+//get the editable element
+var editElem9 = document.getElementById("edit9");
+var editElem10 = document.getElementById("edit10");
+var editElem11 = document.getElementById("edit11");
+//get the edited element content
+var userVersion9 = editElem9.innerHTML;
+var userVersion10 = editElem10.innerHTML;
+var userVersion11 = editElem11.innerHTML;
+
+//save the content to local storage
+localStorage.userEdits9 = userVersion9;
+localStorage.userEdits10 = userVersion10;
+localStorage.userEdits11 = userVersion11;
+
+//write a confirmation to the user
+document.getElementById("update3").innerHTML="Edits saved!";
+
+}
+			
+function saveEdits4() {
+
+//get the editable element
+var editElem12 = document.getElementById("edit12");
+var editElem13 = document.getElementById("edit13");
+var editElem14 = document.getElementById("edit14");
+//get the edited element content
+var userVersion12 = editElem12.innerHTML;
+var userVersion13 = editElem13.innerHTML;
+var userVersion14 = editElem14.innerHTML;
+
+//save the content to local storage
+localStorage.userEdits12 = userVersion12;
+localStorage.userEdits13 = userVersion13;
+localStorage.userEdits14 = userVersion14;
+
+//write a confirmation to the user
+document.getElementById("update4").innerHTML="Edits saved!";
+
+}
+			
+
+function saveEdits5() {
+
+//get the editable element
+var editElem15 = document.getElementById("edit15");
+var editElem16 = document.getElementById("edit16");
+var editElem17 = document.getElementById("edit17");
+//get the edited element content
+var userVersion15 = editElem15.innerHTML;
+var userVersion16 = editElem16.innerHTML;
+var userVersion17 = editElem17.innerHTML;
+
+//save the content to local storage
+localStorage.userEdits15 = userVersion15;
+localStorage.userEdits16 = userVersion16;
+localStorage.userEdits17 = userVersion17;
+
+//write a confirmation to the user
+document.getElementById("update5").innerHTML="Edits saved!";
+
+}
+
+function saveEdits6() {
+
+//get the editable element
+var editElem18 = document.getElementById("edit18");
+var editElem19 = document.getElementById("edit19");
+var editElem20 = document.getElementById("edit20");
+//get the edited element content
+var userVersion18 = editElem18.innerHTML;
+var userVersion19 = editElem19.innerHTML;
+var userVersion20 = editElem20.innerHTML;
+
+//save the content to local storage
+localStorage.userEdits18 = userVersion18;
+localStorage.userEdits19 = userVersion19;
+localStorage.userEdits20 = userVersion20;
+
+//write a confirmation to the user
+document.getElementById("update6").innerHTML="Edits saved!";
+
+}
+			
+	function checkEdits() {
+
+//find out if the user has previously saved edits
+if(localStorage.userEdits!=null)
+document.getElementById("edit").innerHTML = localStorage.userEdits;
+
+if(localStorage.userEdits1!=null)
+document.getElementById("edit1").innerHTML = localStorage.userEdits1;
+
+if(localStorage.userEdits2!=null)
+document.getElementById("edit2").innerHTML = localStorage.userEdits2;
+
+if(localStorage.userEdits3!=null)
+document.getElementById("edit3").innerHTML = localStorage.userEdits3;
+
+if(localStorage.userEdits4!=null)
+document.getElementById("edit4").innerHTML = localStorage.userEdits4;
+
+if(localStorage.userEdits5!=null)
+document.getElementById("edit5").innerHTML = localStorage.userEdits5;
+
+if(localStorage.userEdits6!=null)
+document.getElementById("edit6").innerHTML = localStorage.userEdits6;
+
+if(localStorage.userEdits7!=null)
+document.getElementById("edit7").innerHTML = localStorage.userEdits7;
+
+if(localStorage.userEdits8!=null)
+document.getElementById("edit8").innerHTML = localStorage.userEdits8;
+
+if(localStorage.userEdits9!=null)
+document.getElementById("edit9").innerHTML = localStorage.userEdits9;
+
+if(localStorage.userEdits10!=null)
+document.getElementById("edit10").innerHTML = localStorage.userEdits10;
+
+if(localStorage.userEdits11!=null)
+document.getElementById("edit11").innerHTML = localStorage.userEdits11;
+
+if(localStorage.userEdits12!=null)
+document.getElementById("edit12").innerHTML = localStorage.userEdits12;
+
+if(localStorage.userEdits13!=null)
+document.getElementById("edit13").innerHTML = localStorage.userEdits13;
+
+if(localStorage.userEdits14!=null)
+document.getElementById("edit14").innerHTML = localStorage.userEdits14;
+
+if(localStorage.userEdits15!=null)
+document.getElementById("edit15").innerHTML = localStorage.userEdits15;
+
+if(localStorage.userEdits16!=null)
+document.getElementById("edit16").innerHTML = localStorage.userEdits16;
+
+if(localStorage.userEdits17!=null)
+document.getElementById("edit17").innerHTML = localStorage.userEdits17;
+
+if(localStorage.userEdits18!=null)
+document.getElementById("edit18").innerHTML = localStorage.userEdits18;
+
+if(localStorage.userEdits19!=null)
+document.getElementById("edit19").innerHTML = localStorage.userEdits19;
+
+if(localStorage.userEdits20!=null)
+document.getElementById("edit20").innerHTML = localStorage.userEdits20;
+
+}		
+
+
+			function register() {
+                // Get elements
+                var uname = document.getElementById("username").value;
+                var pword = document.getElementById("password").value;
+                
+                // Check 
+                if (typeof(Storage) !== "undefined") {
+                // store user defined text
+                    localStorage.username = uname;
+                    localStorage.password = pword;
+                    document.getElementById("loginMessage").innerHTML = "Your new account has been activated.";
+                } else {
+                    var cookieEnabled=(navigator.cookieEnabled)? true : false;
+                        if (typeof navigator.cookieEnabled===cookieEnabled){ 
+                            document.cookie = "username=uname; password=pword; expires=Thu, 31 Dec 2015 12:00:00 UTC";
+                            document.getElementById("loginMessage").innerHTML = "Your new account has been activated.";
+                        } else {
+                            document.getElementById("loginMessage").innerHTML = "Your new account cannot be created until you turn cookies on.";
+                            return;
+                        }
+                       
+}
+                }
+            
+            function loginTest() {
+                // Get elements
+                var uname = document.getElementById("username").value;
+                var pword = document.getElementById("password").value;
+                               
+                // Check 
+                if (typeof(Storage) != "undefined") {
+                // store user defined text
+                    var password = localStorage.getItem("password");
+                    var username = localStorage.getItem("username");
+                    
+                    if (username === uname && password === pword){
+                        window.open("http://localhost:8383/Team_4_W15_CIT261/MyScheduler/mainpage.php");
+                    } else {
+                        document.getElementById("loginMessage").innerHTML = "Your password or username are not correct. Try again.";
+                             return;
+                        }
+                } else {
+                    var username = document.cookie.username;
+                    var password = document.cookie.password;
+                    
+                    if (username === uname && password === pword){
+                         window.open("http://localhost:8383/Team_4_W15_CIT261/MyScheduler/mainpage.php");
+                    } else {
+                        document.getElementById("loginMessage").innerHTML = "Your password or username are not correct. Try again.";
+                             return;
+                            }
+                    
+                    }
+               document.getElementById("firstDisplay").innerHTML = output; 
+                    
+            }
+
+function show_monday(){
+    var menu = document.getElementById('monday-dropdown');
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+function show_tuesday(){
+    var menu = document.getElementById('tuesday-dropdown');
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+function show_wednesday(){
+    var menu = document.getElementById('wednesday-dropdown');
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+function show_thursday(){
+    var menu = document.getElementById('thursday-dropdown');
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+function show_friday(){
+    var menu = document.getElementById('friday-dropdown');
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+function show_saturday(){
+    var menu = document.getElementById('saturday-dropdown');
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+function show_sunday(){
+    var menu = document.getElementById('sunday-dropdown');
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+</script>
+<script>
+            function register() {
+                // Get elements
+                var uname = document.getElementById("username").value;
+                var pword = document.getElementById("password").value;
+                
+                // Check 
+                if (typeof(Storage) !== "undefined") {
+                // store user defined text
+                    localStorage.setItem("user", JSON.stringify({
+                        username: uname,
+                        password: pword
+                        
+                    }));
+                    document.getElementById("loginMessage").innerHTML = "Your new account has been activated.";
+                } else {
+                    var cookieEnabled=(navigator.cookieEnabled)? true : false;
+                        if (typeof navigator.cookieEnabled===cookieEnabled){ 
+                            document.cookie = "username=user.username; password=user.password; expires=Thu, 31 Dec 2015 12:00:00 UTC";
+                            document.getElementById("loginMessage").innerHTML = "Your new account has been activated.";
+                        } else {
+                            document.getElementById("loginMessage").innerHTML = "Your new account cannot be created until you turn cookies on.";
+                            return;
+                        }
+                       
+}
+                }
+            
+            function loginTest() {
+                // Get elements
+                var uname = document.getElementById("username").value;
+                var pword = document.getElementById("password").value;
+                               
+                // Check 
+                     if (typeof(Storage) != "undefined") {
+                // store user defined text
+                    var user = JSON.parse(localStorage.getItem("user"));                                  
+                    if (user.username === uname && user.password === pword){
+                        document.querySelector('#flipper').classList.toggle('flipped');
+                        return;
+                    } else {
+                        document.getElementById("loginMessage").innerHTML = "Your password or username are not correct. Try again.";
+                             return;
+                        }
+                } else {
+                    var username = document.cookie.user.username;
+                    var password = document.cookie.user.password;
+                    
+                    if (username === uname && password === pword){
+                         document.querySelector('#flipper').classList.toggle('flipped');
+                        return;
+                    } else {
+                        document.getElementById("loginMessage").innerHTML = "Your password or username are not correct. Try again.";
+                             return;
+                            }
+                    
+                    }
+               document.getElementById("loginMessage").innerHTML = "There was a problem. Try again."; 
+                    
+            }
+</script>
+<script>
+function show_monday(){
+    var menu = document.getElementById('monday-dropdown');
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+function show_tuesday(){
+    var menu = document.getElementById('tuesday-dropdown');
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+function show_wednesday(){
+    var menu = document.getElementById('wednesday-dropdown');
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+function show_thursday(){
+    var menu = document.getElementById('thursday-dropdown');
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+function show_friday(){
+    var menu = document.getElementById('friday-dropdown');
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+function show_saturday(){
+    var menu = document.getElementById('saturday-dropdown');
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+function show_sunday(){
+    var menu = document.getElementById('sunday-dropdown');
+    if(menu.style.display == 'block'){
+        menu.style.display = 'none';
+    }else {
+        menu.style.display = 'block';                    
+    }
+}
+</script>
+<body>
+<div class="flip-container">
+  <div class="flipper" id="flipper"> 
+    <div class="front" id="front"><div class="header">My Scheduler
+</div>
+	<div class="header-animation">WELCOME</div>
+    <center>
+    
+        <div id="loginform">
+            <table>
+            <tr><th><h2 class="login-header">Please Login</h2></th></tr>
+            <tr><td>User Name:</td> <td><input type="text" name="username" id="username" size="12"></td></tr><br>
+            <tr><td>Password:</td> <td><input type="password" name="password" id="password" size="12"></td></tr><br>
+            </table>
+            <br>
+            <button type="button" onclick="loginTest()" class="formButton">LOGIN</button><br><br>
+            <button type="button" onclick="register()" class="formButton">REGISTER</button>
+            <div id="loginMessage"></div>
+            
+        </div>
+        <div class="footer"></div>
+    </center>  </div>
+    <div class="back" id="back"><div class="header">My Scheduler
+</div>
+        
+
+
+
+<div class="day-style">
+    <div class="mon-sun-style" onClick="show_monday()"><a href="#">Monday</a></div>
+<div id="monday-dropdown" class="hidden_menu">
+    <ul class="appointment-display">
+        <li id="edit" contenteditable="true">Name: Click to edit</li>
+        <li id="edit1" contenteditable="true">Time: Click to edit</li>
+        <li id="edit2" contenteditable="true">Location: Click to edit</li>
+                    <input class="save-edits-button" type="button" value="Save Edits" onclick="saveEdits()"/>
+                    <div class="edits-alert"id="update"></div>
+    </ul>  
+</div> 
+</div>   
+<div class="day-style">     
+<div class="mon-sun-style" onClick="show_tuesday()"><a href="#">Tuesday</a></div>
+ <div id="tuesday-dropdown" class="hidden_menu">
+  <ul class="appointment-display">
+        <li id="edit3" contenteditable="true">Name: Click to edit</li>
+        <li id="edit4" contenteditable="true">Time: Click to edit</li>
+        <li id="edit5" contenteditable="true">Location: Click to edit</li>
+                    <input class="save-edits-button" type="button" value="Save Edits" onclick="saveEdits1()"/>
+                    <div class="edits-alert" id="update1"></div>
+    </ul>   
+</div>
+</div>
+<div class="day-style">     
+<div class="mon-sun-style" onClick="show_wednesday()"><a href="#">Wednesday</a></div>
+<div id="wednesday-dropdown" class="hidden_menu">
+    <ul class="appointment-display">
+        <li id="edit6" contenteditable="true">Name: Click to edit</li>
+        <li id="edit7" contenteditable="true">Time: Click to edit</li>
+        <li id="edit8" contenteditable="true">Location: Click to edit</li>
+                    <input class="save-edits-button" type="button" value="Save Edits" onclick="saveEdits2()"/>
+                    <div class="edits-alert" id="update2"></div>
+    </ul>           
+</div>
+</div>
+<div class="day-style">     
+<div class="mon-sun-style" onClick="show_thursday()"><a href="#">Thursday</a></div>
+<div id="thursday-dropdown" class="hidden_menu">
+    <ul class="appointment-display">
+        <li id="edit9" contenteditable="true">Name: Click to edit</li>
+        <li id="edit10" contenteditable="true">Time: Click to edit</li>
+        <li id="edit11" contenteditable="true">Location: Click to edit</li>
+                    <input class="save-edits-button" type="button" value="Save Edits" onclick="saveEdits3()"/>
+                    <div class="edits-alert" id="update3"></div>
+    </ul class="appointment-display">           
+</div>
+</div>
+<div class="day-style">     
+<div class="mon-sun-style" onClick="show_friday()"><a href="#">Friday</a></div>
+<div id="friday-dropdown" class="hidden_menu">
+    <ul class="appointment-display">
+        <li id="edit12" contenteditable="true">Name: Click to edit</li>
+        <li id="edit13" contenteditable="true">Time: Click to edit</li>
+        <li id="edit14" contenteditable="true">Location: Click to edit</li>
+                    <input class="save-edits-button" type="button" value="Save Edits" onclick="saveEdits4()"/>
+                    <div class="edits-alert" id="update4"></div>
+    </ul>           
+</div>
+</div>
+<div class="day-style">     
+<div class="mon-sun-style" onClick="show_saturday()"><a href="#">Saturday</a></div>
+<div id="saturday-dropdown" class="hidden_menu">
+    <ul class="appointment-display">
+        <li id="edit15" contenteditable="true">Name: Click to edit</li>
+        <li id="edit16" contenteditable="true">Time: Click to edit</li>
+        <li id="edit17" contenteditable="true">Location: Click to edit</li>
+                    <input class="save-edits-button" type="button" value="Save Edits" onclick="saveEdits5()"/>
+                    <div class="edits-alert" id="update5"></div>
+    </ul>           
+</div>
+</div>
+<div class="day-style">     
+<div class="mon-sun-style" onClick="show_sunday()"><a href="#">Sunday</a></div>
+<div id="sunday-dropdown" class="hidden_menu">
+    <ul class="appointment-display">
+        <li id="edit18" contenteditable="true">Name: Click to edit</li>
+        <li id="edit19" contenteditable="true">Time: Click to edit</li>
+        <li id="edit20" contenteditable="true">Location: Click to edit</li>
+                    <input class="save-edits-button" type="button" value="Save Edits" onclick="saveEdits6()"/>
+                    <div class="edits-alert" id="update6"></div>
+    </ul>           
+</div>
+</div>
+<div class="help-alert"id="myDiv"></div>
+<button type="button" onclick="loadXMLDoc()">Help</button>
+<div class="footer">
+</div></div>
+</div>
+</div>
+</body>
+</html>
