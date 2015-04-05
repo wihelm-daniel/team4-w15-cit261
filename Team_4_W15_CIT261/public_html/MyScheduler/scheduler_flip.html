@@ -2,7 +2,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Untitled Document</title>
+<title>My Scheduler</title>
+<script src="main.js"></script>
+<link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
 <style>
 .flip-container {
@@ -195,7 +197,8 @@ li {list-style-type:none; margin: 4px 0; padding: 4px 6px;}
                     var password = document.cookie.user.password;
                     
                     if (username === uname && password === pword){
-                         window.open("http://driftwoodsoft.com/MyScheduler/mainpage.html");
+                         document.querySelector('#flipper').classList.toggle('flipped');
+                        return;
                     } else {
                         document.getElementById("loginMessage").innerHTML = "Your password or username are not correct. Try again.";
                              return;
@@ -299,85 +302,98 @@ function show_sunday(){
     </center>  </div>
     <div class="back" id="back"><div class="header">My Scheduler
 </div>
+        
+<div id="myDiv"><h2>Click Here for Instructions!</h2></div>
+<button type="button" onclick="loadXMLDoc()">Click</button>
+
 
 <div class="day-style">
-	<div class="mon-sun-style" onClick="show_monday()"><a href="#">Monday</a></div>
-    <div id="monday-dropdown" class="hidden_menu">
-        <ul class="appointment-display">
-            <li>Name</li>
-            <li>Time</li>
-            <li>Location</li>
-        </ul>  
+    <div class="mon-sun-style" onClick="show_monday()"><a href="#">Monday</a></div>
+<div id="monday-dropdown" class="hidden_menu">
+    <ul class="appointment-display">
+        <li id="edit" contenteditable="true">Name</li>
+        <li id="edit1" contenteditable="true">Time</li>
+        <li id="edit2" contenteditable="true">Location</li>
+                    <input type="button" value="save my edits" onclick="saveEdits()"/>
+                    <div id="update"> - Edit the text and click to save for next time</div>
+    </ul>  
 </div> 
 </div>   
 <div class="day-style">     
 <div class="mon-sun-style" onClick="show_tuesday()"><a href="#">Tuesday</a></div>
-     <div id="tuesday-dropdown" class="hidden_menu">
-      <ul class="appointment-display">
-            <li>Name</li>
-            <li>Time</li>
-            <li>Location</li>
-        </ul>
-      <ul class="appointment-display">
-            <li>Name</li>
-            <li>Time</li>
-            <li>Location</li>
-        </ul>     
+ <div id="tuesday-dropdown" class="hidden_menu">
+  <ul class="appointment-display">
+        <li id="edit3" contenteditable="true">Name</li>
+        <li id="edit4" contenteditable="true">Time</li>
+        <li id="edit5" contenteditable="true">Location</li>
+                    <input type="button" value="save my edits" onclick="saveEdits1()"/>
+                    <div id="update1"> - Edit the text and click to save for next time</div>
+    </ul>   
 </div>
 </div>
 <div class="day-style">     
 <div class="mon-sun-style" onClick="show_wednesday()"><a href="#">Wednesday</a></div>
-    <div id="wednesday-dropdown" class="hidden_menu">
-        <ul class="appointment-display">
-            <li>Name</li>
-            <li>Time</li>
-            <li>Location</li>
-        </ul>           
+<div id="wednesday-dropdown" class="hidden_menu">
+    <ul class="appointment-display">
+        <li id="edit6" contenteditable="true">Name</li>
+        <li id="edit7" contenteditable="true">Time</li>
+        <li id="edit8" contenteditable="true">Location</li>
+                    <input type="button" value="save my edits" onclick="saveEdits2()"/>
+                    <div id="update2"> - Edit the text and click to save for next time</div>
+    </ul>           
 </div>
 </div>
 <div class="day-style">     
 <div class="mon-sun-style" onClick="show_thursday()"><a href="#">Thursday</a></div>
-    <div id="thursday-dropdown" class="hidden_menu">
-        <ul class="appointment-display">
-            <li>Name</li>
-            <li>Time</li>
-            <li>Location</li>
-        </ul class="appointment-display">           
+<div id="thursday-dropdown" class="hidden_menu">
+    <ul class="appointment-display">
+        <li id="edit9" contenteditable="true">Name</li>
+        <li id="edit10" contenteditable="true">Time</li>
+        <li id="edit11" contenteditable="true">Location</li>
+                    <input type="button" value="save my edits" onclick="saveEdits3()"/>
+                    <div id="update3"> - Edit the text and click to save for next time</div>
+    </ul class="appointment-display">           
 </div>
 </div>
 <div class="day-style">     
 <div class="mon-sun-style" onClick="show_friday()"><a href="#">Friday</a></div>
-    <div id="friday-dropdown" class="hidden_menu">
-        <ul class="appointment-display">
-            <li>Name</li>
-            <li>Time</li>
-            <li>Location</li>
-        </ul>           
+<div id="friday-dropdown" class="hidden_menu">
+    <ul class="appointment-display">
+        <li id="edit12" contenteditable="true">Name</li>
+        <li id="edit13" contenteditable="true">Time</li>
+        <li id="edit14" contenteditable="true">Location</li>
+                    <input type="button" value="save my edits" onclick="saveEdits4()"/>
+                    <div id="update4"> - Edit the text and click to save for next time</div>
+    </ul>           
 </div>
 </div>
 <div class="day-style">     
 <div class="mon-sun-style" onClick="show_saturday()"><a href="#">Saturday</a></div>
-    <div id="saturday-dropdown" class="hidden_menu">
-        <ul class="appointment-display">
-            <li>Name</li>
-            <li>Time</li>
-            <li>Location</li>
-        </ul>           
+<div id="saturday-dropdown" class="hidden_menu">
+    <ul class="appointment-display">
+        <li id="edit15" contenteditable="true">Name</li>
+        <li id="edit16" contenteditable="true">Time</li>
+        <li id="edit17" contenteditable="true">Location</li>
+                    <input type="button" value="save my edits" onclick="saveEdits5()"/>
+                    <div id="update5"> - Edit the text and click to save for next time</div>
+    </ul>           
 </div>
 </div>
 <div class="day-style">     
 <div class="mon-sun-style" onClick="show_sunday()"><a href="#">Sunday</a></div>
-    <div id="sunday-dropdown" class="hidden_menu">
-        <ul class="appointment-display">
-            <li>Name</li>
-            <li>Time</li>
-            <li>Location</li>
-        </ul>           
+<div id="sunday-dropdown" class="hidden_menu">
+    <ul class="appointment-display">
+        <li id="edit18" contenteditable="true">Name</li>
+        <li id="edit19" contenteditable="true">Time</li>
+        <li id="edit20" contenteditable="true">Location</li>
+                    <input type="button" value="save my edits" onclick="saveEdits6()"/>
+                    <div id="update6"> - Edit the text and click to save for next time</div>
+    </ul>           
 </div>
 </div>
 <div class="footer">
 </div></div>
-  </div>
+</div>
 </div>
 </body>
 </html>
