@@ -13,21 +13,26 @@
     -o-perspective:1000;
     -ms-perspective: 1000;
     perspective: 1000;
+
     -ms-transform: perspective(1000px);
     -moz-transform: perspective(1000px);
     -moz-transform-style: preserve-3d; 
     -ms-transform-style: preserve-3d; 
 }
+
 .flipper {
     -webkit-transition: 0.6s;
     -webkit-transform-style: preserve-3d;
     -ms-transition: 0.6s;
+
     -moz-transition: 0.6s;
     -moz-transform: perspective(1000px);
     -moz-transform-style: preserve-3d;
     -ms-transform-style: preserve-3d;
+
     transition: 0.6s;
     transform-style: preserve-3d;
+
     position: relative;
     top: 0;
     left: 0;
@@ -36,36 +41,47 @@
     -moz-transition: all 0.4s ease-in-out;
     -o-transition: all 0.4s ease-in-out;
 }
+
 .flipper.flipped {
     -webkit-transform: rotateY(180deg);
     -moz-transform: rotateY(180deg);
     -o-transform: rotateY(180deg);
     transform: rotateY(180deg);
 }
+
 .front, .back {
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     -ms-backface-visibility: hidden;
     backface-visibility: hidden;
+
     -webkit-transition: 0.6s;
     -webkit-transform-style: preserve-3d;
+
     -moz-transition: 0.6s;
     -moz-transform-style: preserve-3d;
+
     -o-transition: 0.6s;
     -o-transform-style: preserve-3d;
+
     -ms-transition: 0.6s;
     -ms-transform-style: preserve-3d;
+
     transition: 0.6s;
     transform-style: preserve-3d;
+
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
+
 }
+
 /* front pane, placed above back */
 .front {
     z-index: 2;
 }
+
 /* back, initially hidden pane */
 .back {
     -webkit-transform: rotateY(180deg);
@@ -74,33 +90,45 @@
     transform: rotateY(180deg);
 }
 .hidden_menu{display:none}
+
 .header {width:auto; height: 50px; background-color:#5C94C8; padding-top:15px; padding-left:20px ;font-size: 2em; color: white; margin-bottom: 3px;}
+
 .day-style a{font-size:2em;text-decoration:none; color:#29ACD4}
+
 .day-style a,a:visited,a:hover,a:active{
 	position:relative;
-  	transition:0.5s color ease;
+  transition:0.5s color ease;
 	text-decoration:none;
 	color:#29ACD4;
 }
+
 .day-style a:hover{
 	color:#A61E20;
 }
+
 .mon-sun-style{list-style-type:none; margin: 4px 0; padding: 4px 6px; border: 2px solid;background-color:#E4E4E4; border-color:#D3D3D3; border-radius: 5px;
 }
-li {list-style-type:none; margin: 4px 0; padding: 4px 0px; font-family:"Helvetica Neue", Helvetica, Arial, sans-serif}
-.appointment-display {border-bottom: thin solid #D3D3D3; padding-bottom: 15px}
+
+li {list-style-type:none; margin: 4px 0; padding: 4px 6px;}
+
+.appointment-display {border-bottom: thin solid #D3D3D3;}
 
 .footer { border-top: thin solid #5C94C8; margin-top: 15px;
 	}
+
 .hidden_menu{display:none}
+
 .header {width:auto; height: 50px; background-color:#5C94C8; padding-top:15px; padding-left:20px ;font-size: 2em; color: white; margin-bottom: 3px;}
+
 .day-style a{font-size:2em;text-decoration:none; color:#29ACD4; padding-left: 12px}
+
 .day-style a,a:visited,a:hover,a:active{
 	position:relative;
   transition:0.2s color ease;
 	text-decoration:none;
 	color:#29ACD4;
 }
+
 .day-style a:hover{
 	color:#C84040;
 }
@@ -112,6 +140,7 @@ li {list-style-type:none; margin: 4px 0; padding: 4px 0px; font-family:"Helvetic
 .help-alert {padding: 10px; font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;}
 
 #loginform { width:100%; margin-top: -65px}
+
 		h2.login-header {color:#5C94C8; font-size:2em;}
 		
 		button {font-size:1.5em; color:#29ACD4; width: 100%; height: 50px;}
@@ -125,23 +154,24 @@ li {list-style-type:none; margin: 4px 0; padding: 4px 0px; font-family:"Helvetic
 		.footer { border-top: thin solid #5C94C8; margin-top: 15px;}
 		
 		#loginMessage {margin-top: 15px; color:#A61E20; size: 1.3em}
-		
-		.header-animation {color: white;padding: 10px;display:inline;border-radius: 5px;background: #29ACD4;position: relative;
+                
+                .header-animation {color: white;padding: 10px;display:inline;border-radius: 5px;background: #29ACD4;position: relative;
     		-webkit-animation: headeranimation 5s linear 2s infinite alternate;
     		animation: headeranimation 5s linear 2s infinite alternate;
-}
-@-webkit-keyframes headeranimation {
-    0%   {background:#29ACD4; left:0px; top:0px;}
-    40%  {background:#A61E20; left:180px; top:0px;}
-}
-@keyframes headeranimation {
-    0%   {background:#29ACD4; left:0px; top:0px;}
-    40%  {background:#A61E20; left:180px; top:0px;}
-}
-
+                }
+                @-webkit-keyframes headeranimation {
+                    0%   {background:#29ACD4; left:0px; top:0px;}
+                    40%  {background:#A61E20; left:180px; top:0px;}
+                }
+                @keyframes headeranimation {
+                    0%   {background:#29ACD4; left:0px; top:0px;}
+                    40%  {background:#A61E20; left:180px; top:0px;}
+                }
+                
 </style>
 <script>
-function loadXMLDoc()
+    
+    function loadXMLDoc()
 {
 var xmlhttp;
 if (window.XMLHttpRequest)
@@ -379,123 +409,6 @@ if(localStorage.userEdits20!=null)
 document.getElementById("edit20").innerHTML = localStorage.userEdits20;
 
 }		
-
-
-			function register() {
-                // Get elements
-                var uname = document.getElementById("username").value;
-                var pword = document.getElementById("password").value;
-                
-                // Check 
-                if (typeof(Storage) !== "undefined") {
-                // store user defined text
-                    localStorage.username = uname;
-                    localStorage.password = pword;
-                    document.getElementById("loginMessage").innerHTML = "Your new account has been activated.";
-                } else {
-                    var cookieEnabled=(navigator.cookieEnabled)? true : false;
-                        if (typeof navigator.cookieEnabled===cookieEnabled){ 
-                            document.cookie = "username=uname; password=pword; expires=Thu, 31 Dec 2015 12:00:00 UTC";
-                            document.getElementById("loginMessage").innerHTML = "Your new account has been activated.";
-                        } else {
-                            document.getElementById("loginMessage").innerHTML = "Your new account cannot be created until you turn cookies on.";
-                            return;
-                        }
-                       
-}
-                }
-            
-            function loginTest() {
-                // Get elements
-                var uname = document.getElementById("username").value;
-                var pword = document.getElementById("password").value;
-                               
-                // Check 
-                if (typeof(Storage) != "undefined") {
-                // store user defined text
-                    var password = localStorage.getItem("password");
-                    var username = localStorage.getItem("username");
-                    
-                    if (username === uname && password === pword){
-                        window.open("http://localhost:8383/Team_4_W15_CIT261/MyScheduler/mainpage.php");
-                    } else {
-                        document.getElementById("loginMessage").innerHTML = "Your password or username are not correct. Try again.";
-                             return;
-                        }
-                } else {
-                    var username = document.cookie.username;
-                    var password = document.cookie.password;
-                    
-                    if (username === uname && password === pword){
-                         window.open("http://localhost:8383/Team_4_W15_CIT261/MyScheduler/mainpage.php");
-                    } else {
-                        document.getElementById("loginMessage").innerHTML = "Your password or username are not correct. Try again.";
-                             return;
-                            }
-                    
-                    }
-               document.getElementById("firstDisplay").innerHTML = output; 
-                    
-            }
-
-function show_monday(){
-    var menu = document.getElementById('monday-dropdown');
-    if(menu.style.display == 'block'){
-        menu.style.display = 'none';
-    }else {
-        menu.style.display = 'block';                    
-    }
-}
-function show_tuesday(){
-    var menu = document.getElementById('tuesday-dropdown');
-    if(menu.style.display == 'block'){
-        menu.style.display = 'none';
-    }else {
-        menu.style.display = 'block';                    
-    }
-}
-function show_wednesday(){
-    var menu = document.getElementById('wednesday-dropdown');
-    if(menu.style.display == 'block'){
-        menu.style.display = 'none';
-    }else {
-        menu.style.display = 'block';                    
-    }
-}
-function show_thursday(){
-    var menu = document.getElementById('thursday-dropdown');
-    if(menu.style.display == 'block'){
-        menu.style.display = 'none';
-    }else {
-        menu.style.display = 'block';                    
-    }
-}
-function show_friday(){
-    var menu = document.getElementById('friday-dropdown');
-    if(menu.style.display == 'block'){
-        menu.style.display = 'none';
-    }else {
-        menu.style.display = 'block';                    
-    }
-}
-function show_saturday(){
-    var menu = document.getElementById('saturday-dropdown');
-    if(menu.style.display == 'block'){
-        menu.style.display = 'none';
-    }else {
-        menu.style.display = 'block';                    
-    }
-}
-function show_sunday(){
-    var menu = document.getElementById('sunday-dropdown');
-    if(menu.style.display == 'block'){
-        menu.style.display = 'none';
-    }else {
-        menu.style.display = 'block';                    
-    }
-}
-</script>
-<script>
             function register() {
                 // Get elements
                 var uname = document.getElementById("username").value;
@@ -559,14 +472,17 @@ function show_sunday(){
 <script>
 function show_monday(){
     var menu = document.getElementById('monday-dropdown');
+
     if(menu.style.display == 'block'){
         menu.style.display = 'none';
     }else {
         menu.style.display = 'block';                    
     }
 }
+
 function show_tuesday(){
     var menu = document.getElementById('tuesday-dropdown');
+
     if(menu.style.display == 'block'){
         menu.style.display = 'none';
     }else {
@@ -575,38 +491,47 @@ function show_tuesday(){
 }
 function show_wednesday(){
     var menu = document.getElementById('wednesday-dropdown');
+
     if(menu.style.display == 'block'){
         menu.style.display = 'none';
     }else {
         menu.style.display = 'block';                    
     }
 }
+
 function show_thursday(){
     var menu = document.getElementById('thursday-dropdown');
+
     if(menu.style.display == 'block'){
         menu.style.display = 'none';
     }else {
         menu.style.display = 'block';                    
     }
 }
+
 function show_friday(){
     var menu = document.getElementById('friday-dropdown');
+
     if(menu.style.display == 'block'){
         menu.style.display = 'none';
     }else {
         menu.style.display = 'block';                    
     }
 }
+
 function show_saturday(){
     var menu = document.getElementById('saturday-dropdown');
+
     if(menu.style.display == 'block'){
         menu.style.display = 'none';
     }else {
         menu.style.display = 'block';                    
     }
 }
+
 function show_sunday(){
     var menu = document.getElementById('sunday-dropdown');
+
     if(menu.style.display == 'block'){
         menu.style.display = 'none';
     }else {
@@ -619,7 +544,6 @@ function show_sunday(){
   <div class="flipper" id="flipper"> 
     <div class="front" id="front"><div class="header">My Scheduler
 </div>
-	<div class="header-animation">WELCOME</div>
     <center>
     
         <div id="loginform">
@@ -639,18 +563,19 @@ function show_sunday(){
     <div class="back" id="back"><div class="header">My Scheduler
 </div>
         
-
+<div id="myDiv"><h2>Click Here for Instructions!</h2></div>
+<button type="button" onclick="loadXMLDoc()">Click</button>
 
 
 <div class="day-style">
     <div class="mon-sun-style" onClick="show_monday()"><a href="#">Monday</a></div>
 <div id="monday-dropdown" class="hidden_menu">
     <ul class="appointment-display">
-        <li id="edit" contenteditable="true">Name: Click to edit</li>
-        <li id="edit1" contenteditable="true">Time: Click to edit</li>
-        <li id="edit2" contenteditable="true">Location: Click to edit</li>
-                    <input class="save-edits-button" type="button" value="Save Edits" onclick="saveEdits()"/>
-                    <div class="edits-alert"id="update"></div>
+        <li id="edit" contenteditable="true">Name</li>
+        <li id="edit1" contenteditable="true">Time</li>
+        <li id="edit2" contenteditable="true">Location</li>
+                    <input type="button" value="save my edits" onclick="saveEdits()"/>
+                    <div id="update"> - Edit the text and click to save for next time</div>
     </ul>  
 </div> 
 </div>   
@@ -658,11 +583,11 @@ function show_sunday(){
 <div class="mon-sun-style" onClick="show_tuesday()"><a href="#">Tuesday</a></div>
  <div id="tuesday-dropdown" class="hidden_menu">
   <ul class="appointment-display">
-        <li id="edit3" contenteditable="true">Name: Click to edit</li>
-        <li id="edit4" contenteditable="true">Time: Click to edit</li>
-        <li id="edit5" contenteditable="true">Location: Click to edit</li>
-                    <input class="save-edits-button" type="button" value="Save Edits" onclick="saveEdits1()"/>
-                    <div class="edits-alert" id="update1"></div>
+        <li id="edit3" contenteditable="true">Name</li>
+        <li id="edit4" contenteditable="true">Time</li>
+        <li id="edit5" contenteditable="true">Location</li>
+                    <input type="button" value="save my edits" onclick="saveEdits1()"/>
+                    <div id="update1"> - Edit the text and click to save for next time</div>
     </ul>   
 </div>
 </div>
@@ -670,11 +595,11 @@ function show_sunday(){
 <div class="mon-sun-style" onClick="show_wednesday()"><a href="#">Wednesday</a></div>
 <div id="wednesday-dropdown" class="hidden_menu">
     <ul class="appointment-display">
-        <li id="edit6" contenteditable="true">Name: Click to edit</li>
-        <li id="edit7" contenteditable="true">Time: Click to edit</li>
-        <li id="edit8" contenteditable="true">Location: Click to edit</li>
-                    <input class="save-edits-button" type="button" value="Save Edits" onclick="saveEdits2()"/>
-                    <div class="edits-alert" id="update2"></div>
+        <li id="edit6" contenteditable="true">Name</li>
+        <li id="edit7" contenteditable="true">Time</li>
+        <li id="edit8" contenteditable="true">Location</li>
+                    <input type="button" value="save my edits" onclick="saveEdits2()"/>
+                    <div id="update2"> - Edit the text and click to save for next time</div>
     </ul>           
 </div>
 </div>
@@ -682,11 +607,11 @@ function show_sunday(){
 <div class="mon-sun-style" onClick="show_thursday()"><a href="#">Thursday</a></div>
 <div id="thursday-dropdown" class="hidden_menu">
     <ul class="appointment-display">
-        <li id="edit9" contenteditable="true">Name: Click to edit</li>
-        <li id="edit10" contenteditable="true">Time: Click to edit</li>
-        <li id="edit11" contenteditable="true">Location: Click to edit</li>
-                    <input class="save-edits-button" type="button" value="Save Edits" onclick="saveEdits3()"/>
-                    <div class="edits-alert" id="update3"></div>
+        <li id="edit9" contenteditable="true">Name</li>
+        <li id="edit10" contenteditable="true">Time</li>
+        <li id="edit11" contenteditable="true">Location</li>
+                    <input type="button" value="save my edits" onclick="saveEdits3()"/>
+                    <div id="update3"> - Edit the text and click to save for next time</div>
     </ul class="appointment-display">           
 </div>
 </div>
@@ -694,11 +619,11 @@ function show_sunday(){
 <div class="mon-sun-style" onClick="show_friday()"><a href="#">Friday</a></div>
 <div id="friday-dropdown" class="hidden_menu">
     <ul class="appointment-display">
-        <li id="edit12" contenteditable="true">Name: Click to edit</li>
-        <li id="edit13" contenteditable="true">Time: Click to edit</li>
-        <li id="edit14" contenteditable="true">Location: Click to edit</li>
-                    <input class="save-edits-button" type="button" value="Save Edits" onclick="saveEdits4()"/>
-                    <div class="edits-alert" id="update4"></div>
+        <li id="edit12" contenteditable="true">Name</li>
+        <li id="edit13" contenteditable="true">Time</li>
+        <li id="edit14" contenteditable="true">Location</li>
+                    <input type="button" value="save my edits" onclick="saveEdits4()"/>
+                    <div id="update4"> - Edit the text and click to save for next time</div>
     </ul>           
 </div>
 </div>
@@ -706,11 +631,11 @@ function show_sunday(){
 <div class="mon-sun-style" onClick="show_saturday()"><a href="#">Saturday</a></div>
 <div id="saturday-dropdown" class="hidden_menu">
     <ul class="appointment-display">
-        <li id="edit15" contenteditable="true">Name: Click to edit</li>
-        <li id="edit16" contenteditable="true">Time: Click to edit</li>
-        <li id="edit17" contenteditable="true">Location: Click to edit</li>
-                    <input class="save-edits-button" type="button" value="Save Edits" onclick="saveEdits5()"/>
-                    <div class="edits-alert" id="update5"></div>
+        <li id="edit15" contenteditable="true">Name</li>
+        <li id="edit16" contenteditable="true">Time</li>
+        <li id="edit17" contenteditable="true">Location</li>
+                    <input type="button" value="save my edits" onclick="saveEdits5()"/>
+                    <div id="update5"> - Edit the text and click to save for next time</div>
     </ul>           
 </div>
 </div>
@@ -718,16 +643,14 @@ function show_sunday(){
 <div class="mon-sun-style" onClick="show_sunday()"><a href="#">Sunday</a></div>
 <div id="sunday-dropdown" class="hidden_menu">
     <ul class="appointment-display">
-        <li id="edit18" contenteditable="true">Name: Click to edit</li>
-        <li id="edit19" contenteditable="true">Time: Click to edit</li>
-        <li id="edit20" contenteditable="true">Location: Click to edit</li>
-                    <input class="save-edits-button" type="button" value="Save Edits" onclick="saveEdits6()"/>
-                    <div class="edits-alert" id="update6"></div>
+        <li id="edit18" contenteditable="true">Name</li>
+        <li id="edit19" contenteditable="true">Time</li>
+        <li id="edit20" contenteditable="true">Location</li>
+                    <input type="button" value="save my edits" onclick="saveEdits6()"/>
+                    <div id="update6"> - Edit the text and click to save for next time</div>
     </ul>           
 </div>
 </div>
-<div class="help-alert"id="myDiv"></div>
-<button type="button" onclick="loadXMLDoc()">Help</button>
 <div class="footer">
 </div></div>
 </div>
